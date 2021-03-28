@@ -8,8 +8,9 @@ import com.mito.stockarticle.infra.db.dao.ArticleDao
 import com.mito.stockarticle.infra.db.entity.ArticleEntity
 
 @Database(
-  entities = arrayOf(ArticleEntity::class),
-  version = 1
+  entities = [ArticleEntity::class],
+  version = 1,
+  exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
   abstract fun articleDao(): ArticleDao
