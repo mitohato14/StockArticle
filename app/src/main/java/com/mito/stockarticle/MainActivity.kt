@@ -35,3 +35,4 @@ fun DefaultPreview() {
   StockArticleTheme {
     Greeting("Android")
   }
+}
