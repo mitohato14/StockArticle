@@ -1,4 +1,4 @@
-package com.mito.stockarticle
+package com.mito.stockarticle.model
 
 import java.net.URL
 
