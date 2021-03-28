@@ -48,8 +48,16 @@ dependencies {
   implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
   implementation("androidx.compose.material:material:${rootProject.extra["compose_version"]}")
   implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
-  implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0")
-  implementation("androidx.activity:activity-compose:1.3.0-alpha03")
+  implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+  implementation("androidx.activity:activity-compose:1.3.0-alpha05")
+
+  implementation("androidx.room:room-runtime:2.2.6")
+  kapt("androidx.room:room-compiler:2.2.6")
+
+  // optional - Kotlin Extensions and Coroutines support for Room
+  implementation("androidx.room:room-ktx:2.2.6")
+
+
   testImplementation("junit:junit:4.+")
   androidTestImplementation("androidx.test.ext:junit:1.1.2")
   androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
