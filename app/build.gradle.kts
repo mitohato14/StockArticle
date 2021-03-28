@@ -1,6 +1,7 @@
 plugins {
   id("com.android.application")
   id("kotlin-android")
+  id("dagger.hilt.android.plugin")
   kotlin("kapt")
 }
 
@@ -58,6 +59,8 @@ dependencies {
   // optional - Kotlin Extensions and Coroutines support for Room
   implementation("androidx.room:room-ktx:2.2.6")
 
+  implementation("com.google.dagger:hilt-android:2.28-alpha")
+  kapt("com.google.dagger:hilt-android-compiler:2.28-alpha")
 
   testImplementation("junit:junit:4.+")
   androidTestImplementation("androidx.test.ext:junit:1.1.2")
