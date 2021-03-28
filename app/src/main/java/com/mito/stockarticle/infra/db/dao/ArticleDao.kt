@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mito.stockarticle.infra.db.ArticleEntity
+import com.mito.stockarticle.infra.db.entity.ArticleEntity
 
 @Dao
 interface ArticleDao {
@@ -19,7 +19,7 @@ interface ArticleDao {
   suspend fun findById(id: String): ArticleEntity
 
   @Query("DELETE FROM articles WHERE id = :id")
-  suspend fun delete(id: String): ArticleEntity
+  suspend fun delete(id: String)
 
   @Delete
   suspend fun delete(articleEntity: ArticleEntity)

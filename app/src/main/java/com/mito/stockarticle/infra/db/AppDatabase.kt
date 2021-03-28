@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mito.stockarticle.infra.db.dao.ArticleDao
+import com.mito.stockarticle.infra.db.entity.ArticleEntity
 
 @Database(
   entities = arrayOf(ArticleEntity::class),
