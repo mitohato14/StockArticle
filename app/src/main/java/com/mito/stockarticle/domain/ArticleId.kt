@@ -1,3 +1,3 @@
-package com.mito.stockarticle.model
+package com.mito.stockarticle.domain
 
 data class ArticleId(val value: String)

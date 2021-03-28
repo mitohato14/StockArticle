@@ -1,11 +1,11 @@
-package com.mito.stockarticle.model.db.dao
+package com.mito.stockarticle.infra.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mito.stockarticle.model.ArticleEntity
+import com.mito.stockarticle.infra.db.ArticleEntity
 
 @Dao
 interface ArticleDao {

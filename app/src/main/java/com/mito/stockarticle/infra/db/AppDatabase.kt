@@ -1,11 +1,10 @@
-package com.mito.stockarticle.model.db
+package com.mito.stockarticle.infra.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.mito.stockarticle.model.ArticleEntity
-import com.mito.stockarticle.model.db.dao.ArticleDao
+import com.mito.stockarticle.infra.db.dao.ArticleDao
 
 @Database(
   entities = arrayOf(ArticleEntity::class),

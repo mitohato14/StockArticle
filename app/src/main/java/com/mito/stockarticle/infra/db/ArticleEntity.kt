@@ -1,4 +1,4 @@
-package com.mito.stockarticle.model
+package com.mito.stockarticle.infra.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
