@@ -53,8 +53,15 @@ dependencies {
   implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
   implementation("androidx.activity:activity-compose:1.3.0-alpha05")
 
+  implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+  kapt("androidx.lifecycle:lifecycle-compiler:2.3.1")
+  androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
+
   implementation("androidx.room:room-runtime:2.2.6")
   kapt("androidx.room:room-compiler:2.2.6")
+
+  implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha03")
+  implementation("androidx.compose.runtime:runtime-livedata:1.0.0-beta03")
 
   // optional - Kotlin Extensions and Coroutines support for Room
   implementation("androidx.room:room-ktx:2.2.6")

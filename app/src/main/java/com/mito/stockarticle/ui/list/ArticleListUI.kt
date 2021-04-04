@@ -22,15 +22,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mito.stockarticle.domain.Article
 import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.ui.utils.LinkableText
+import androidx.compose.runtime.livedata.observeAsState
 import java.net.URL
 
 @Composable
-fun ArticleList(
-  articleList: List<Article>
-) {
+fun ArticleList(articleListViewModel: ArticleListViewModel = viewModel()) {
+  val articleList: List<Article> by articleListViewModel.articleList.observeAsState(listOf())
   LazyColumn(
     contentPadding = PaddingValues(10.dp),
     modifier = Modifier.fillMaxSize()
@@ -112,7 +113,7 @@ fun ArticleListPreview() {
       )
     )
   }
-  ArticleList(articleList = articleList.toList())
+//  ArticleList(articleList = articleList.toList())
 }
 
 @Preview
