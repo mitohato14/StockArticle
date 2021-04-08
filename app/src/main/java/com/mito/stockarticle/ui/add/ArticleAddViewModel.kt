@@ -44,4 +44,10 @@ class ArticleAddViewModel : ViewModel() {
       _navigateToList.send(Unit)
     }
   }
+
+  fun onClickBack() {
+    viewModelScope.launch {
+      _navigateToList.send(Unit)
+    }
+  }
 }

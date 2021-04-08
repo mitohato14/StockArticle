@@ -36,7 +36,9 @@ class MainActivity : ComponentActivity() {
             ArticleList(addArticleAction = navActions.addArticle)
           }
           composable(MainDestinations.ADD_ROUTE) {
-            ArticleAdd()
+            ArticleAdd(
+              backAction = navActions.popBack
+            )
           }
         }
       }
@@ -55,6 +57,9 @@ class MainNavActions(navController: NavController) {
   }
   val toArticleList: () -> Unit = {
     navController.navigate(MainDestinations.LIST_ROUTE)
+  }
+  val popBack: () -> Unit = {
+    navController.popBackStack()
   }
 }
 

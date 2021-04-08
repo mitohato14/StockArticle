@@ -18,6 +18,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -63,7 +65,7 @@ fun ArticleList(
     floatingActionButton = {
       FloatingActionButton(onClick = articleListViewModel::onAddClick) {
         Icon(
-          painter = painterResource(id = R.drawable.ic_baseline_add_24),
+          imageVector = Icons.Default.Add,
           contentDescription = stringResource(R.string.add)
         )
       }
