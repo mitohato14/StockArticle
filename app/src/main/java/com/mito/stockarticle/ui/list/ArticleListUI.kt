@@ -12,9 +12,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,22 +32,56 @@ import com.mito.stockarticle.domain.Article
 import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.ui.utils.LinkableText
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCompositionContext
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import com.mito.stockarticle.R
+import kotlinx.coroutines.flow.collect
 import java.net.URL
 
 @Composable
-fun ArticleList(articleListViewModel: ArticleListViewModel = viewModel()) {
+fun ArticleList(
+  articleListViewModel: ArticleListViewModel = viewModel(),
+  addArticleAction: () -> Unit
+) {
   val articleList: List<Article> by articleListViewModel.articleList.observeAsState(listOf())
-  LazyColumn(
-    contentPadding = PaddingValues(10.dp),
-    modifier = Modifier.fillMaxSize()
-  ) {
-    items(
-      articleList,
-      key = { it.id }
-    ) { item ->
-      ArticleRow(article = item)
+
+  LaunchedEffect(key1 = articleListViewModel.navigateToAdd) {
+    articleListViewModel.navigateToAdd.collect {
+      addArticleAction()
     }
   }
+  Scaffold(
+    topBar = {
+      TopAppBar(
+        title = {
+          Text(text = stringResource(R.string.arcticle_list_title))
+        }
+      )
+    },
+    floatingActionButton = {
+      FloatingActionButton(onClick = articleListViewModel::onAddClick) {
+        Icon(
+          painter = painterResource(id = R.drawable.ic_baseline_add_24),
+          contentDescription = stringResource(R.string.add)
+        )
+      }
+    },
+    content = {
+      LazyColumn(
+        contentPadding = PaddingValues(10.dp),
+        modifier = Modifier.fillMaxSize()
+      ) {
+        items(
+          articleList,
+          key = { it.id }
+        ) { item ->
+          ArticleRow(article = item)
+        }
+      }
+    }
+  )
 }
 
 @Composable
