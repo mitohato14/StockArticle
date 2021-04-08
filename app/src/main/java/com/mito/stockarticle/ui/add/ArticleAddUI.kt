@@ -91,7 +91,11 @@ fun ArticleAdd(
           )
 
           ArticleAddButtonLayer(
-            onClickAdd = articleAddViewModel::onClickAdd,
+            onClickAdd = { articleAddViewModel.onClickAdd(
+              title,
+              url,
+              memo
+            ) },
             onClickCancel = articleAddViewModel::onClickCancel,
             modifier = Modifier.constrainAs(buttonLayer) {
               end.linkTo(

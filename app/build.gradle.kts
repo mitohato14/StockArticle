@@ -70,6 +70,7 @@ dependencies {
   // optional - Kotlin Extensions and Coroutines support for Room
   implementation("androidx.room:room-ktx:2.2.6")
 
+  implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
   implementation("com.google.dagger:hilt-android:2.28-alpha")
   kapt("com.google.dagger:hilt-android-compiler:2.28-alpha")
 
