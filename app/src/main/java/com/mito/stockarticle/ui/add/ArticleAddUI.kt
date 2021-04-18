@@ -1,5 +1,6 @@
 package com.mito.stockarticle.ui.add
 
+import android.webkit.URLUtil
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -95,6 +96,7 @@ fun ArticleAdd(
           )
 
           ArticleAddButtonLayer(
+            addable = URLUtil.isValidUrl(url),
             onClickAdd = {
               articleAddViewModel.onClickAdd(
                 title,
@@ -156,6 +158,7 @@ fun ArticleAddInputLayer(
 
 @Composable
 fun ArticleAddButtonLayer(
+  addable: Boolean,
   onClickAdd: () -> Unit,
   onClickCancel: () -> Unit,
   modifier: Modifier = Modifier
@@ -165,7 +168,10 @@ fun ArticleAddButtonLayer(
       Text(text = "cancel")
     }
     Spacer(modifier = Modifier.size(16.dp))
-    Button(onClick = onClickAdd) {
+    Button(
+      onClick = onClickAdd,
+      enabled = addable
+    ) {
       Text(text = "add")
     }
   }
@@ -194,6 +200,7 @@ fun ArticleAddInputPreview() {
 @Composable
 fun ArticleAddButtonPreview() {
   ArticleAddButtonLayer(
+    true,
     {},
     {}
   )
