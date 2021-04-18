@@ -5,6 +5,8 @@ import com.mito.stockarticle.domain.Article
 import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.domain.repo.ArticleRepository
 import com.mito.stockarticle.infra.db.dao.ArticleDao
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.net.URL
 
 class ArticleRepositoryImpl(
@@ -33,9 +35,11 @@ class ArticleRepositoryImpl(
     dao.delete(id.value)
   }
 
-  override suspend fun findAll(): List<Article> {
+  override fun findAll(): Flow<List<Article>> {
     return dao.getAll().map {
-      it.toDomainModel()
+      it.map { entity ->
+        entity.toDomainModel()
+      }
     }
   }
 

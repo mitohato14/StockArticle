@@ -16,6 +16,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -56,36 +57,38 @@ fun ArticleList(
       addArticleAction()
     }
   }
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        title = {
-          Text(text = stringResource(R.string.arcticle_list_title))
-        }
-      )
-    },
-    floatingActionButton = {
-      FloatingActionButton(onClick = articleListViewModel::onAddClick) {
-        Icon(
-          imageVector = Icons.Default.Add,
-          contentDescription = stringResource(R.string.add)
+  Surface(color = MaterialTheme.colors.background) {
+    Scaffold(
+      topBar = {
+        TopAppBar(
+          title = {
+            Text(text = stringResource(R.string.arcticle_list_title))
+          }
         )
-      }
-    },
-    content = {
-      LazyColumn(
-        contentPadding = PaddingValues(10.dp),
-        modifier = Modifier.fillMaxSize()
-      ) {
-        items(
-          articleList,
-          key = { it.id.value }
-        ) { item ->
-          ArticleRow(article = item)
+      },
+      floatingActionButton = {
+        FloatingActionButton(onClick = articleListViewModel::onAddClick) {
+          Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = stringResource(R.string.add)
+          )
+        }
+      },
+      content = {
+        LazyColumn(
+          contentPadding = PaddingValues(10.dp),
+          modifier = Modifier.fillMaxSize()
+        ) {
+          items(
+            articleList,
+            key = { it.id.value }
+          ) { item ->
+            ArticleRow(article = item)
+          }
         }
       }
-    }
-  )
+    )
+  }
 }
 
 @Composable
