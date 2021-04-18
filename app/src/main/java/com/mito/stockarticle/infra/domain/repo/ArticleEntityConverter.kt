@@ -9,11 +9,13 @@ fun ArticleEntity.toDomainModel() = Article(
   id = ArticleId(value = id.toString()),
   title = title,
   url = URL(url),
-  memo = memo
+  memo = memo,
+  isArchived = isArchived
 )
 
 fun Article.toEntity() = ArticleEntity(
   title = title,
   url = url.toString(),
-  memo = memo
+  memo = memo,
+  isArchived = isArchived
 )

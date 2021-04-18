@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.mito.stockarticle.infra.db.entity.ArticleEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -24,4 +25,7 @@ interface ArticleDao {
 
   @Delete
   suspend fun delete(articleEntity: ArticleEntity)
+
+  @Update
+  suspend fun update(articleEntity: ArticleEntity)
 }

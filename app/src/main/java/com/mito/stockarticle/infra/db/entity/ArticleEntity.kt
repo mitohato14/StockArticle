@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 data class ArticleEntity(
   val title: String,
   val url: String,
-  val memo: String
+  val memo: String,
+  val isArchived: Boolean
 ) {
   @PrimaryKey(autoGenerate = true)
   var id: Long = 0

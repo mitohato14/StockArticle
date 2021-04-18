@@ -11,6 +11,8 @@ interface ArticleRepository : ArticleReadOnlyRepository {
     memo: String
   )
 
+  suspend fun update(article: Article)
+
   suspend fun delete(article: Article)
   suspend fun delete(id: ArticleId)
 }

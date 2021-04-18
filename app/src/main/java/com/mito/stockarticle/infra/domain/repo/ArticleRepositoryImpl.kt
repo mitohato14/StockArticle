@@ -21,10 +21,15 @@ class ArticleRepositoryImpl(
       id = ArticleId(value = ""),
       title = title,
       url = URL(url),
-      memo = memo
+      memo = memo,
+      isArchived = false
     )
     Log.d("article", article.toString())
     dao.insert(article.toEntity())
+  }
+
+  override suspend fun update(article: Article) {
+    dao.update(articleEntity = article.toEntity())
   }
 
   override suspend fun delete(article: Article) {
