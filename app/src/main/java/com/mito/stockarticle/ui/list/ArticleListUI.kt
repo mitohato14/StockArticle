@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -97,15 +98,16 @@ fun ArticleRow(
 ) {
   var expand by remember { mutableStateOf(false) }
   Card(
+    backgroundColor = MaterialTheme.colors.surface,
     modifier = Modifier
       .fillMaxWidth()
       .padding(10.dp)
-      .clickable { expand = !expand }
       .animateContentSize()
   ) {
     Column(
       modifier = Modifier
         .fillMaxWidth()
+        .clickable { expand = !expand }
         .padding(8.dp)
     ) {
       Text(
@@ -162,7 +164,7 @@ fun ArticleListPreview() {
 //  ArticleList(articleList = articleList.toList())
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ArticleRowPreview() {
   ArticleRow(
