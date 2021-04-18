@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
@@ -25,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mito.stockarticle.R
 import kotlinx.coroutines.flow.collect
@@ -88,6 +90,7 @@ fun ArticleAdd(
                 parent.end,
                 16.dp
               )
+              width = Dimension.fillToConstraints
             }
           )
 
@@ -131,19 +134,22 @@ fun ArticleAddInputLayer(
     TextField(
       value = title,
       onValueChange = onTitleChange,
-      label = { Text(text = "title") }
+      label = { Text(text = "title") },
+      modifier = Modifier.fillMaxWidth()
     )
     Spacer(modifier = Modifier.size(32.dp))
     TextField(
       value = url,
       onValueChange = onUrlChange,
-      label = { Text(text = "url") }
+      label = { Text(text = "url") },
+      modifier = Modifier.fillMaxWidth()
     )
     Spacer(modifier = Modifier.size(32.dp))
     TextField(
       value = memo,
       onValueChange = onMemoChange,
-      label = { Text(text = "memo") }
+      label = { Text(text = "memo") },
+      modifier = Modifier.fillMaxWidth()
     )
   }
 }
