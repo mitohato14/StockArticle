@@ -4,18 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mito.stockarticle.domain.Article
-import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.domain.repo.ArticleRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.net.URL
-import javax.inject.Inject
 
-@HiltViewModel
-class ArticleAddViewModel @Inject constructor(
+class ArticleAddViewModel(
   private val articleRepository: ArticleRepository
 ) : ViewModel() {
   private val _title: MutableLiveData<String> = MutableLiveData()

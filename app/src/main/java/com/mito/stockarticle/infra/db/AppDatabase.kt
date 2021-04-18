@@ -16,7 +16,6 @@ abstract class AppDatabase : RoomDatabase() {
   abstract fun articleDao(): ArticleDao
 
   companion object {
-    @Volatile
     private var INSTANCE: AppDatabase? = null
 
     fun getDataBase(context: Context): AppDatabase {

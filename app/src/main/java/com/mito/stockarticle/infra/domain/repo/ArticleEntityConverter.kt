@@ -14,6 +14,6 @@ fun ArticleEntity.toDomainModel() = Article(
 
 fun Article.toEntity() = ArticleEntity(
   title = title,
-  url = url.path,
+  url = url.toString(),
   memo = memo
 )

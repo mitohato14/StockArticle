@@ -35,18 +35,20 @@ import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.ui.utils.LinkableText
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCompositionContext
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.mito.stockarticle.R
 import kotlinx.coroutines.flow.collect
+import org.koin.androidx.compose.getViewModel
 import java.net.URL
 
 @Composable
 fun ArticleList(
-  articleListViewModel: ArticleListViewModel = viewModel(),
   addArticleAction: () -> Unit
 ) {
+  val articleListViewModel: ArticleListViewModel = getViewModel()
   val articleList: List<Article> by articleListViewModel.articleList.observeAsState(listOf())
 
   LaunchedEffect(key1 = articleListViewModel.navigateToAdd) {
@@ -77,7 +79,7 @@ fun ArticleList(
       ) {
         items(
           articleList,
-          key = { it.id }
+          key = { it.id.value }
         ) { item ->
           ArticleRow(article = item)
         }

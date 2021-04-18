@@ -1,13 +1,13 @@
 package com.mito.stockarticle.infra.domain.repo
 
+import android.util.Log
 import com.mito.stockarticle.domain.Article
 import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.domain.repo.ArticleRepository
 import com.mito.stockarticle.infra.db.dao.ArticleDao
 import java.net.URL
-import javax.inject.Inject
 
-class ArticleRepositoryImpl @Inject constructor(
+class ArticleRepositoryImpl(
   private val dao: ArticleDao
 ) : ArticleRepository {
   override suspend fun add(
@@ -21,6 +21,7 @@ class ArticleRepositoryImpl @Inject constructor(
       url = URL(url),
       memo = memo
     )
+    Log.d("article", article.toString())
     dao.insert(article.toEntity())
   }
 

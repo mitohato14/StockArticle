@@ -28,12 +28,13 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mito.stockarticle.R
 import kotlinx.coroutines.flow.collect
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ArticleAdd(
-  articleAddViewModel: ArticleAddViewModel = viewModel(),
   backAction: () -> Unit
 ) {
+  val articleAddViewModel: ArticleAddViewModel = getViewModel()
   val title: String by articleAddViewModel.title.observeAsState("")
   val url: String by articleAddViewModel.url.observeAsState("")
   val memo: String by articleAddViewModel.memo.observeAsState("")
@@ -91,11 +92,13 @@ fun ArticleAdd(
           )
 
           ArticleAddButtonLayer(
-            onClickAdd = { articleAddViewModel.onClickAdd(
-              title,
-              url,
-              memo
-            ) },
+            onClickAdd = {
+              articleAddViewModel.onClickAdd(
+                title,
+                url,
+                memo
+              )
+            },
             onClickCancel = articleAddViewModel::onClickCancel,
             modifier = Modifier.constrainAs(buttonLayer) {
               end.linkTo(
