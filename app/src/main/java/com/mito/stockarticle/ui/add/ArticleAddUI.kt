@@ -1,6 +1,7 @@
 package com.mito.stockarticle.ui.add
 
 import android.webkit.URLUtil
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -23,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -133,27 +136,44 @@ fun ArticleAddInputLayer(
   modifier: Modifier = Modifier
 ) {
   Column(modifier = modifier) {
-    TextField(
+    BackGroundTransparentTextField(
       value = title,
       onValueChange = onTitleChange,
       label = { Text(text = "title") },
       modifier = Modifier.fillMaxWidth()
     )
     Spacer(modifier = Modifier.size(32.dp))
-    TextField(
+    BackGroundTransparentTextField(
       value = url,
       onValueChange = onUrlChange,
       label = { Text(text = "url") },
       modifier = Modifier.fillMaxWidth()
     )
     Spacer(modifier = Modifier.size(32.dp))
-    TextField(
+    BackGroundTransparentTextField(
       value = memo,
       onValueChange = onMemoChange,
       label = { Text(text = "memo") },
       modifier = Modifier.fillMaxWidth()
     )
   }
+}
+
+@Composable
+fun BackGroundTransparentTextField(
+  value: String,
+  onValueChange: (String) -> Unit,
+  label: @Composable () -> Unit,
+  modifier: Modifier
+) {
+  TextField(
+    value = value,
+    onValueChange = onValueChange,
+    label = label,
+    colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
+    modifier = modifier
+  )
+
 }
 
 @Composable
