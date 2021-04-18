@@ -15,6 +15,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.TopAppBar
@@ -173,7 +174,6 @@ fun BackGroundTransparentTextField(
     colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
     modifier = modifier
   )
-
 }
 
 @Composable
@@ -184,7 +184,7 @@ fun ArticleAddButtonLayer(
   modifier: Modifier = Modifier
 ) {
   Row(modifier = modifier) {
-    Button(onClick = onClickCancel) {
+    TextButton(onClick = onClickCancel) {
       Text(text = "cancel")
     }
     Spacer(modifier = Modifier.size(16.dp))
