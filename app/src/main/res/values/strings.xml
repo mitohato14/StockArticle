@@ -5,4 +5,5 @@
     <string name="arcticle_list_title">記事一覧</string>
     <string name="article_add_title">追加</string>
     <string name="back">back</string>
+    <string name="tag_add_title">タグ管理</string>
 </resources>

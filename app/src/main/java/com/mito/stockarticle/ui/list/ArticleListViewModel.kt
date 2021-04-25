@@ -19,9 +19,18 @@ class ArticleListViewModel(
   private val _navigateToAdd = Channel<Unit>(Channel.BUFFERED)
   val navigateToAdd = _navigateToAdd.receiveAsFlow()
 
+  private val _navigateToAddTag = Channel<Unit>(Channel.BUFFERED)
+  val navigateToAddTag = _navigateToAddTag.receiveAsFlow()
+
   fun onAddClick() {
     viewModelScope.launch {
       _navigateToAdd.send(Unit)
+    }
+  }
+
+  fun onNewTagClick() {
+    viewModelScope.launch {
+      _navigateToAddTag.send(Unit)
     }
   }
 

@@ -14,6 +14,7 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.mito.stockarticle.ui.add.ArticleAdd
 import com.mito.stockarticle.ui.list.ArticleList
+import com.mito.stockarticle.ui.tag.add.TagAdd
 import com.mito.stockarticle.ui.theme.StockArticleTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,10 +32,18 @@ class MainActivity : ComponentActivity() {
           startDestination = MainDestinations.LIST_ROUTE
         ) {
           composable(MainDestinations.LIST_ROUTE) {
-            ArticleList(addArticleAction = navActions.addArticle)
+            ArticleList(
+              addArticleAction = navActions.addArticle,
+              addTagAction = navActions.addTag
+            )
           }
-          composable(MainDestinations.ADD_ROUTE) {
+          composable(MainDestinations.ADD_ARTICLE_ROUTE) {
             ArticleAdd(
+              backAction = navActions.popBack
+            )
+          }
+          composable(MainDestinations.ADD_TAG_ROUTE) {
+            TagAdd(
               backAction = navActions.popBack
             )
           }
@@ -45,13 +54,17 @@ class MainActivity : ComponentActivity() {
 }
 
 object MainDestinations {
-  const val LIST_ROUTE = "list"
-  const val ADD_ROUTE = "add"
+  const val LIST_ROUTE = "List"
+  const val ADD_ARTICLE_ROUTE = "AddArticle"
+  const val ADD_TAG_ROUTE = "AddTag"
 }
 
 class MainNavActions(navController: NavController) {
   val addArticle: () -> Unit = {
-    navController.navigate(MainDestinations.ADD_ROUTE)
+    navController.navigate(MainDestinations.ADD_ARTICLE_ROUTE)
+  }
+  val addTag: () -> Unit = {
+    navController.navigate(MainDestinations.ADD_TAG_ROUTE)
   }
   val toArticleList: () -> Unit = {
     navController.navigate(MainDestinations.LIST_ROUTE)

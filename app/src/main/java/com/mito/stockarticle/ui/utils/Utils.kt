@@ -1,45 +1,27 @@
 package com.mito.stockarticle.ui.utils
 
-import android.content.Intent
-import android.net.Uri
-import androidx.compose.foundation.clickable
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
-import com.mito.stockarticle.ui.theme.Blue500
+import androidx.compose.ui.graphics.Color
 
-@Composable
-fun LinkableText(
-  modifier: Modifier = Modifier,
-  url: String,
-  text: String? = null
-) {
-  val context = LocalContext.current
-  Text(
-    text = text ?: url,
-    modifier = modifier
-      .clickable {
-        context.startActivity(
-          Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(url)
-          )
-        )
-      },
-    style = TextStyle(textDecoration = TextDecoration.Underline),
-    color = Blue500
+fun String.convertToColor(): Color {
+  return Color(
+    red = substring(
+      0,
+      1
+    ).toInt(16),
+    green = substring(
+      2,
+      3
+    ).toInt(16),
+    blue = substring(
+      4,
+      5
+    ).toInt(16),
   )
 }
 
-@Preview(name = "url text")
-@Preview(name = "linkable text")
-@Composable
-fun LinkableTextPreview() {
-  LinkableText(
-    url = "https:google.com"
-  )
+fun Color.toHexString(): String {
+  return "#" +
+      (red * 255).toInt().toString(16) +
+      (green * 255).toInt().toString(16) +
+      (blue * 255).toInt().toString(16)
 }

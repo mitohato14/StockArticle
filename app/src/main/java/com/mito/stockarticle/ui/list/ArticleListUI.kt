@@ -22,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,7 +46,8 @@ import java.net.URL
 
 @Composable
 fun ArticleList(
-  addArticleAction: () -> Unit
+  addArticleAction: () -> Unit,
+  addTagAction: () -> Unit
 ) {
   val articleListViewModel: ArticleListViewModel = getViewModel()
   val articleList: List<Article> by articleListViewModel.articleList.observeAsState(listOf())
@@ -55,12 +57,22 @@ fun ArticleList(
       addArticleAction()
     }
   }
+  LaunchedEffect(key1 = articleListViewModel.navigateToAddTag) {
+    articleListViewModel.navigateToAddTag.collect {
+      addTagAction()
+    }
+  }
   Surface(color = MaterialTheme.colors.background) {
     Scaffold(
       topBar = {
         TopAppBar(
           title = {
             Text(text = stringResource(R.string.arcticle_list_title))
+          },
+          actions = {
+            IconButton(onClick = articleListViewModel::onNewTagClick) {
+              Icon(imageVector = Icons.Default.Star, contentDescription = "")
+            }
           }
         )
       },
