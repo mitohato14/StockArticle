@@ -1,6 +1,5 @@
 package com.mito.stockarticle.ui.utils
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.clickable
@@ -13,11 +12,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import com.mito.stockarticle.ui.theme.Blue500
 
-
 @Composable
 fun LinkableText(
-  url: String,
   modifier: Modifier = Modifier,
+  url: String,
   text: String? = null
 ) {
   val context = LocalContext.current

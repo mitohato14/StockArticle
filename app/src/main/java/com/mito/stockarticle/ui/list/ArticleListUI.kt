@@ -22,7 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -136,8 +136,8 @@ fun ArticleRow(
           }
         ) {
           Icon(
-            imageVector = Icons.Outlined.Delete,
-            contentDescription = stringResource(R.string.archive),
+            imageVector = Icons.Outlined.Check,
+            contentDescription = stringResource(R.string.read),
           )
         }
       }
