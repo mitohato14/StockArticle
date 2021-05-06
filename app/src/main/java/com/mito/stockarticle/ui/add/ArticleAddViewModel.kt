@@ -51,12 +51,6 @@ class ArticleAddViewModel(
     }
   }
 
-  fun onClickCancel() {
-    viewModelScope.launch {
-      _navigateToList.send(Unit)
-    }
-  }
-
   fun onClickBack() {
     viewModelScope.launch {
       _navigateToList.send(Unit)

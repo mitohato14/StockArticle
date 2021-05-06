@@ -108,7 +108,6 @@ fun ArticleAdd(
                 memo
               )
             },
-            onClickCancel = articleAddViewModel::onClickCancel,
             modifier = Modifier.constrainAs(buttonLayer) {
               end.linkTo(
                 parent.end,
@@ -180,14 +179,9 @@ fun BackGroundTransparentTextField(
 fun ArticleAddButtonLayer(
   addable: Boolean,
   onClickAdd: () -> Unit,
-  onClickCancel: () -> Unit,
   modifier: Modifier = Modifier
 ) {
   Row(modifier = modifier) {
-    TextButton(onClick = onClickCancel) {
-      Text(text = "cancel")
-    }
-    Spacer(modifier = Modifier.size(16.dp))
     Button(
       onClick = onClickAdd,
       enabled = addable
@@ -222,6 +216,5 @@ fun ArticleAddButtonPreview() {
   ArticleAddButtonLayer(
     true,
     {},
-    {}
   )
 }

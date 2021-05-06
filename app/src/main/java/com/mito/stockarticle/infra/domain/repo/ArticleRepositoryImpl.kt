@@ -1,6 +1,5 @@
 package com.mito.stockarticle.infra.domain.repo
 
-import android.util.Log
 import com.mito.stockarticle.domain.Article
 import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.domain.repo.ArticleRepository
@@ -24,7 +23,6 @@ class ArticleRepositoryImpl(
       memo = memo,
       isArchived = false
     )
-    Log.d("article", article.toString())
     dao.insert(article.toEntity())
   }
 
