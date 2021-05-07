@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class ArticleAddViewModel(
   private val articleRepository: ArticleRepository
-) : ViewModel(), ArticleAddAction {
+) : ViewModel(), ArticleAddEvent {
   private val _navigateToList = Channel<Unit>(Channel.BUFFERED)
   val navigateToList = _navigateToList.receiveAsFlow()
 

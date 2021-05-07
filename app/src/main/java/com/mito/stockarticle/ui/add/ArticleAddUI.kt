@@ -38,7 +38,7 @@ fun ArticleAdd(
 ) {
   val articleAddViewModel: ArticleAddViewModel = getViewModel()
   val state: ArticleAddState = articleAddViewModel.state
-  val action: ArticleAddAction = articleAddViewModel
+  val event: ArticleAddEvent = articleAddViewModel
 
   LaunchedEffect(key1 = articleAddViewModel.navigateToList) {
     articleAddViewModel.navigateToList.collect {
@@ -51,7 +51,7 @@ fun ArticleAdd(
       TopAppBar(
         navigationIcon = {
           IconButton(
-            onClick = action::onClickBack
+            onClick = event::onClickBack
           ) {
             Icon(
               imageVector = Icons.Default.ArrowBack,
@@ -67,7 +67,7 @@ fun ArticleAdd(
     content = {
       ArticleAddContentCompose(
         state = state,
-        action = action
+        event = event
       )
     }
   )
@@ -76,7 +76,7 @@ fun ArticleAdd(
 @Composable
 private fun ArticleAddContentCompose(
   state: ArticleAddState,
-  action: ArticleAddAction
+  event: ArticleAddEvent
 ) {
   Surface(color = MaterialTheme.colors.background) {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -84,11 +84,11 @@ private fun ArticleAddContentCompose(
 
       ArticleAddInputLayer(
         title = state.title,
-        onTitleChange = action::onTitleChange,
+        onTitleChange = event::onTitleChange,
         url = state.url,
-        onUrlChange = action::onUrlChange,
+        onUrlChange = event::onUrlChange,
         memo = state.memo,
-        onMemoChange = action::onMemoChange,
+        onMemoChange = event::onMemoChange,
         modifier = Modifier.constrainAs(inputLayer) {
           top.linkTo(
             parent.top,
@@ -108,7 +108,7 @@ private fun ArticleAddContentCompose(
 
       ArticleAddButtonLayer(
         addable = URLUtil.isValidUrl(state.url),
-        onClickAdd = action::onClickAdd,
+        onClickAdd = event::onClickAdd,
         modifier = Modifier.constrainAs(buttonLayer) {
           end.linkTo(
             parent.end,
