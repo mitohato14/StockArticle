@@ -1,8 +1,8 @@
 package com.mito.stockarticle.ui.add
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mito.stockarticle.domain.repo.ArticleRepository
@@ -17,7 +17,7 @@ class ArticleAddViewModel(
   val navigateToList = _navigateToList.receiveAsFlow()
 
   var state: ArticleAddState by mutableStateOf(ArticleAddState())
-  private set
+    private set
 
   override fun onTitleChange(title: String) {
     state = state.copy(title = title)
