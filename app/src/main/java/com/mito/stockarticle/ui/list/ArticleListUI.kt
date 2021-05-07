@@ -22,8 +22,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Label
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -71,7 +71,10 @@ fun ArticleList(
           },
           actions = {
             IconButton(onClick = articleListViewModel::onNewTagClick) {
-              Icon(imageVector = Icons.Default.Star, contentDescription = "")
+              Icon(
+                imageVector = Icons.Outlined.Label,
+                contentDescription = ""
+              )
             }
           }
         )
