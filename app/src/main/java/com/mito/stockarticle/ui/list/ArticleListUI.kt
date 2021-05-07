@@ -27,7 +27,6 @@ import androidx.compose.material.icons.outlined.Label
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -50,7 +49,8 @@ fun ArticleList(
   addTagAction: () -> Unit
 ) {
   val articleListViewModel: ArticleListViewModel = getViewModel()
-  val articleList: List<Article> by articleListViewModel.articleList.observeAsState(listOf())
+  val state: ArticleListState = articleListViewModel.state
+  val event: ArticleListEvent = articleListViewModel
 
   LaunchedEffect(key1 = articleListViewModel.navigateToAdd) {
     articleListViewModel.navigateToAdd.collect {
@@ -70,7 +70,7 @@ fun ArticleList(
             Text(text = stringResource(R.string.arcticle_list_title))
           },
           actions = {
-            IconButton(onClick = articleListViewModel::onNewTagClick) {
+            IconButton(onClick = event::onNewTagClick) {
               Icon(
                 imageVector = Icons.Outlined.Label,
                 contentDescription = ""
@@ -80,7 +80,7 @@ fun ArticleList(
         )
       },
       floatingActionButton = {
-        FloatingActionButton(onClick = articleListViewModel::onAddClick) {
+        FloatingActionButton(onClick = event::onAddClick) {
           Icon(
             imageVector = Icons.Default.Add,
             contentDescription = stringResource(R.string.add)
@@ -88,27 +88,40 @@ fun ArticleList(
         }
       },
       content = {
-        LazyColumn(
-          contentPadding = PaddingValues(10.dp),
-          modifier = Modifier.fillMaxSize()
-        ) {
-          items(
-            articleList,
-            key = { it.id.value }
-          ) { item ->
-            ArticleRow(
-              article = item,
-              articleListViewModel::onArchiveClick
-            )
-          }
-        }
+        ArticleListContentCompose(
+          state = state,
+          event = event
+        )
       }
     )
   }
 }
 
 @Composable
-fun ArticleRow(
+private fun ArticleListContentCompose(
+  state: ArticleListState,
+  event: ArticleListEvent
+) {
+  Surface(color = MaterialTheme.colors.background) {
+    LazyColumn(
+      contentPadding = PaddingValues(10.dp),
+      modifier = Modifier.fillMaxSize()
+    ) {
+      items(
+        state.articleList,
+        key = { it.id.value }
+      ) { item ->
+        ArticleRow(
+          article = item,
+          event::onArchiveClick
+        )
+      }
+    }
+  }
+}
+
+@Composable
+private fun ArticleRow(
   article: Article,
   onArchiveClick: (ArticleId) -> Unit
 ) {
@@ -173,7 +186,7 @@ fun ArticleRow(
 }
 
 @Composable
-fun ArticleDetail(
+private fun ArticleDetail(
   memo: String,
   url: String,
   modifier: Modifier = Modifier
@@ -190,7 +203,7 @@ fun ArticleDetail(
 
 @Preview
 @Composable
-fun ArticleListPreview() {
+private fun ArticleListPreview() {
   val articleList = arrayListOf<Article>()
   for (i in 0..10) {
     articleList.add(
@@ -208,7 +221,7 @@ fun ArticleListPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun ArticleRowPreview() {
+private fun ArticleRowPreview() {
   ArticleRow(
     Article(
       id = ArticleId(value = ""),
@@ -223,7 +236,7 @@ fun ArticleRowPreview() {
 
 @Preview
 @Composable
-fun ArticleDetailPreview() {
+private fun ArticleDetailPreview() {
   ArticleDetail(
     "hoge",
     "https://google.com"
