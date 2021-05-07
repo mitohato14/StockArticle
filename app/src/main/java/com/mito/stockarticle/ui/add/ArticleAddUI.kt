@@ -21,8 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -39,9 +37,8 @@ fun ArticleAdd(
   backAction: () -> Unit
 ) {
   val articleAddViewModel: ArticleAddViewModel = getViewModel()
-  val title: String by articleAddViewModel.title.observeAsState("")
-  val url: String by articleAddViewModel.url.observeAsState("")
-  val memo: String by articleAddViewModel.memo.observeAsState("")
+  val state: ArticleAddState = articleAddViewModel.state
+  val action: ArticleAddAction = articleAddViewModel
 
   LaunchedEffect(key1 = articleAddViewModel.navigateToList) {
     articleAddViewModel.navigateToList.collect {
@@ -54,7 +51,7 @@ fun ArticleAdd(
       TopAppBar(
         navigationIcon = {
           IconButton(
-            onClick = articleAddViewModel::onClickBack
+            onClick = action::onClickBack
           ) {
             Icon(
               imageVector = Icons.Default.ArrowBack,
@@ -68,62 +65,68 @@ fun ArticleAdd(
       )
     },
     content = {
-      Surface(color = MaterialTheme.colors.background) {
-        ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-          val (inputLayer, buttonLayer) = createRefs()
-
-          ArticleAddInputLayer(
-            title = title,
-            onTitleChange = articleAddViewModel::onTitleChange,
-            url = url,
-            onUrlChange = articleAddViewModel::onUrlChange,
-            memo = memo,
-            onMemoChange = articleAddViewModel::onMemoChange,
-            modifier = Modifier.constrainAs(inputLayer) {
-              top.linkTo(
-                parent.top,
-                16.dp
-              )
-              start.linkTo(
-                parent.start,
-                16.dp
-              )
-              end.linkTo(
-                parent.end,
-                16.dp
-              )
-              width = Dimension.fillToConstraints
-            }
-          )
-
-          ArticleAddButtonLayer(
-            addable = URLUtil.isValidUrl(url),
-            onClickAdd = {
-              articleAddViewModel.onClickAdd(
-                title,
-                url,
-                memo
-              )
-            },
-            modifier = Modifier.constrainAs(buttonLayer) {
-              end.linkTo(
-                parent.end,
-                16.dp
-              )
-              bottom.linkTo(
-                parent.bottom,
-                16.dp
-              )
-            }
-          )
-        }
-      }
+      ArticleAddContentCompose(
+        state = state,
+        action = action
+      )
     }
   )
 }
 
 @Composable
-fun ArticleAddInputLayer(
+private fun ArticleAddContentCompose(
+  state: ArticleAddState,
+  action: ArticleAddAction
+) {
+  Surface(color = MaterialTheme.colors.background) {
+    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+      val (inputLayer, buttonLayer) = createRefs()
+
+      ArticleAddInputLayer(
+        title = state.title,
+        onTitleChange = action::onTitleChange,
+        url = state.url,
+        onUrlChange = action::onUrlChange,
+        memo = state.memo,
+        onMemoChange = action::onMemoChange,
+        modifier = Modifier.constrainAs(inputLayer) {
+          top.linkTo(
+            parent.top,
+            16.dp
+          )
+          start.linkTo(
+            parent.start,
+            16.dp
+          )
+          end.linkTo(
+            parent.end,
+            16.dp
+          )
+          width = Dimension.fillToConstraints
+        }
+      )
+
+      ArticleAddButtonLayer(
+        addable = URLUtil.isValidUrl(state.url),
+        onClickAdd = action::onClickAdd,
+        modifier = Modifier.constrainAs(buttonLayer) {
+          end.linkTo(
+            parent.end,
+            16.dp
+          )
+          bottom.linkTo(
+            parent.bottom,
+            16.dp
+          )
+        }
+      )
+    }
+  }
+
+}
+
+@Composable
+private fun ArticleAddInputLayer(
   title: String,
   onTitleChange: (String) -> Unit,
   url: String,
