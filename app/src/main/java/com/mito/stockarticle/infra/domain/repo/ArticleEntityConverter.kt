@@ -6,7 +6,7 @@ import com.mito.stockarticle.infra.db.entity.ArticleEntity
 import java.net.URL
 
 fun ArticleEntity.toDomainModel() = Article(
-  id = ArticleId(value = id.toString()),
+  id = ArticleId(value = id),
   title = title,
   url = URL(url),
   memo = memo,
@@ -14,6 +14,7 @@ fun ArticleEntity.toDomainModel() = Article(
 )
 
 fun Article.toEntity() = ArticleEntity(
+  id = id.value,
   title = title,
   url = url.toString(),
   memo = memo,

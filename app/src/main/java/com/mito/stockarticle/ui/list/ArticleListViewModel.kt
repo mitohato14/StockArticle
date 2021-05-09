@@ -23,7 +23,7 @@ class ArticleListViewModel(
 
   init {
     viewModelScope.launch {
-      articleRepository.findAll().collect {
+      articleRepository.findUnArchivedAll().collect {
         state = state.copy(articleList = it)
       }
     }

@@ -7,6 +7,7 @@ import com.mito.stockarticle.infra.db.dao.ArticleDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.net.URL
+import java.util.UUID
 
 class ArticleRepositoryImpl(
   private val dao: ArticleDao
@@ -17,7 +18,7 @@ class ArticleRepositoryImpl(
     memo: String
   ) {
     val article = Article(
-      id = ArticleId(value = ""),
+      id = ArticleId(value = UUID.randomUUID().toString()),
       title = title,
       url = URL(url),
       memo = memo,
@@ -40,6 +41,14 @@ class ArticleRepositoryImpl(
 
   override fun findAll(): Flow<List<Article>> {
     return dao.getAll().map {
+      it.map { entity ->
+        entity.toDomainModel()
+      }
+    }
+  }
+
+  override fun findUnArchivedAll(): Flow<List<Article>> {
+    return dao.getUnarchivedAll().map {
       it.map { entity ->
         entity.toDomainModel()
       }

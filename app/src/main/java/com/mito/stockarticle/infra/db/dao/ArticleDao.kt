@@ -17,6 +17,9 @@ interface ArticleDao {
   @Query("SELECT * FROM articles")
   fun getAll(): Flow<List<ArticleEntity>>
 
+  @Query("SELECT * FROM articles WHERE isArchived = 0")
+  fun getUnarchivedAll(): Flow<List<ArticleEntity>>
+
   @Query("SELECT * FROM articles WHERE id = :id LIMIT 1")
   suspend fun findById(id: String): ArticleEntity
 
