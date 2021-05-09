@@ -1,5 +1,8 @@
 package com.mito.stockarticle.ui.tag.add
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,57 +15,42 @@ import kotlinx.coroutines.launch
 
 class ArticleTagAddViewModel(
   private val articleTagRepository: ArticleTagRepository
-) : ViewModel() {
-  private val _name: MutableLiveData<String> = MutableLiveData("")
-  val name: LiveData<String> = _name
-
-  private val _red: MutableLiveData<Float> = MutableLiveData(0.5f)
-  val red: LiveData<Float> = _red
-
-  private val _green: MutableLiveData<Float> = MutableLiveData(0.5f)
-  val green: LiveData<Float> = _green
-
-  private val _blue: MutableLiveData<Float> = MutableLiveData(0.5f)
-  val blue: LiveData<Float> = _blue
-
+) : ViewModel(), ArticleTagAddEvent {
   private val _navigateToList = Channel<Unit>(Channel.BUFFERED)
   val navigateToList: Flow<Unit> = _navigateToList.receiveAsFlow()
 
+  var state: ArticleTagAddState by mutableStateOf(ArticleTagAddState())
+    private set
 
-  fun onNameChange(tagName: String) {
-    _name.value = tagName
+  override fun onNameChange(name: String) {
+    state = state.copy(name = name)
   }
 
-  fun onRedChange(red: Float) {
-    _red.value = red
+  override fun onRedChange(red: Float) {
+    state = state.copy(red = red)
   }
 
-  fun onGreenChange(green: Float) {
-    _green.value = green
+  override fun onGreenChange(green: Float) {
+    state = state.copy(green = green)
   }
 
-  fun onBlueChange(blue: Float) {
-    _blue.value = blue
+  override fun onBlueChange(blue: Float) {
+    state = state.copy(blue = blue)
   }
 
-  fun onClickAdd(
-    name: String,
-    red: Float,
-    green: Float,
-    blue: Float
-  ) {
+  override fun onClickAdd() {
     viewModelScope.launch {
       articleTagRepository.add(
-        name,
-        red,
-        green,
-        blue
+        state.name,
+        state.red,
+        state.green,
+        state.blue
       )
       _navigateToList.send(Unit)
     }
   }
 
-  fun onClickBack() {
+  override fun onClickBack() {
     viewModelScope.launch {
       _navigateToList.send(Unit)
     }

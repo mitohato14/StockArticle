@@ -18,8 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,10 +37,8 @@ fun TagAdd(
   backAction: () -> Unit
 ) {
   val articleTagAddViewModel: ArticleTagAddViewModel = getViewModel()
-  val name: String by articleTagAddViewModel.name.observeAsState("")
-  val red: Float by articleTagAddViewModel.red.observeAsState(0f)
-  val green: Float by articleTagAddViewModel.green.observeAsState(0f)
-  val blue: Float by articleTagAddViewModel.blue.observeAsState(0f)
+  val state: ArticleTagAddState = articleTagAddViewModel.state
+  val event: ArticleTagAddEvent = articleTagAddViewModel
 
   LaunchedEffect(key1 = articleTagAddViewModel.navigateToList) {
     articleTagAddViewModel.navigateToList.collect {
@@ -55,7 +51,7 @@ fun TagAdd(
       TopAppBar(
         navigationIcon = {
           IconButton(
-            onClick = articleTagAddViewModel::onClickBack
+            onClick = event::onClickBack
           ) {
             Icon(
               imageVector = Icons.Default.ArrowBack,
@@ -69,59 +65,63 @@ fun TagAdd(
       )
     },
     content = {
-      ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val (inputLayer, addButton) = createRefs()
-        TagAddInputLayer(
-          name = name,
-          onNameChange = articleTagAddViewModel::onNameChange,
-          red = red,
-          onRedChange = articleTagAddViewModel::onRedChange,
-          green = green,
-          onGreenChange = articleTagAddViewModel::onGreenChange,
-          blue = blue,
-          onBlueChange = articleTagAddViewModel::onBlueChange,
-          modifier = Modifier.constrainAs(inputLayer) {
-            top.linkTo(
-              parent.top,
-              16.dp
-            )
-            start.linkTo(
-              parent.start,
-              16.dp
-            )
-            end.linkTo(
-              parent.end,
-              16.dp
-            )
-            width = Dimension.fillToConstraints
-          }
-        )
-
-        Button(
-          onClick = {
-            articleTagAddViewModel.onClickAdd(
-              name = name,
-              red = red,
-              green = green,
-              blue = blue
-            )
-          },
-          modifier = Modifier.constrainAs(addButton) {
-            end.linkTo(
-              parent.end,
-              16.dp
-            )
-            bottom.linkTo(
-              parent.bottom,
-              16.dp
-            )
-          }
-        ) {
-          Text(text = stringResource(id = R.string.add))
-        }
-      }
+      ArticleTagAddContentCompose(
+        state,
+        event
+      )
     }
   )
+}
+
+@Composable
+private fun ArticleTagAddContentCompose(
+  state: ArticleTagAddState,
+  event: ArticleTagAddEvent
+) {
+  ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+    val (inputLayer, addButton) = createRefs()
+    TagAddInputLayer(
+      name = state.name,
+      onNameChange = event::onNameChange,
+      red = state.red,
+      onRedChange = event::onRedChange,
+      green = state.green,
+      onGreenChange = event::onGreenChange,
+      blue = state.blue,
+      onBlueChange = event::onBlueChange,
+      modifier = Modifier.constrainAs(inputLayer) {
+        top.linkTo(
+          parent.top,
+          16.dp
+        )
+        start.linkTo(
+          parent.start,
+          16.dp
+        )
+        end.linkTo(
+          parent.end,
+          16.dp
+        )
+        width = Dimension.fillToConstraints
+      }
+    )
+
+    Button(
+      onClick = event::onClickAdd,
+      modifier = Modifier.constrainAs(addButton) {
+        end.linkTo(
+          parent.end,
+          16.dp
+        )
+        bottom.linkTo(
+          parent.bottom,
+          16.dp
+        )
+      }
+    ) {
+      Text(text = stringResource(id = R.string.add))
+    }
+  }
 }
 
 @Composable
