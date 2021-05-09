@@ -12,6 +12,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Slider
+import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -125,7 +126,7 @@ private fun ArticleTagAddContentCompose(
 }
 
 @Composable
-fun TagAddInputLayer(
+private fun TagAddInputLayer(
   name: String,
   onNameChange: (String) -> Unit,
   red: Float,
@@ -165,32 +166,44 @@ fun TagAddInputLayer(
       value = selectedColor.red,
       onValueChange = onRedChange,
       valueRange = 0f..1f,
+      colors = SliderDefaults.colors(
+        thumbColor = Color.Red,
+        activeTrackColor = Color.Red
+      ),
       modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp),
+        .padding(horizontal = 16.dp)
     )
     Slider(
       value = selectedColor.green,
       onValueChange = onGreenChange,
       valueRange = 0f..1f,
+      colors = SliderDefaults.colors(
+        thumbColor = Color.Green,
+        activeTrackColor = Color.Green
+      ),
       modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp),
+        .padding(horizontal = 16.dp)
     )
     Slider(
       value = selectedColor.blue,
       onValueChange = onBlueChange,
       valueRange = 0f..1f,
+      colors = SliderDefaults.colors(
+        thumbColor = Color.Blue,
+        activeTrackColor = Color.Blue
+      ),
       modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp),
+        .padding(horizontal = 16.dp)
     )
   }
 }
 
 @Preview
 @Composable
-fun InputPreview() {
+private fun InputPreview() {
   TagAddInputLayer(
     name = "",
     onNameChange = { /*TODO*/ },
