@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,7 +24,6 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Check
-import androidx.compose.material.icons.outlined.Label
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -46,10 +44,7 @@ import org.koin.androidx.compose.getViewModel
 import java.net.URL
 
 @Composable
-fun ArticleList(
-  addArticleAction: () -> Unit,
-  addTagAction: () -> Unit
-) {
+fun ArticleList(addArticleAction: () -> Unit) {
   val articleListViewModel: ArticleListViewModel = getViewModel()
   val state: ArticleListState = articleListViewModel.state
   val event: ArticleListEvent = articleListViewModel
@@ -59,26 +54,12 @@ fun ArticleList(
       addArticleAction()
     }
   }
-  LaunchedEffect(key1 = articleListViewModel.navigateToAddTag) {
-    articleListViewModel.navigateToAddTag.collect {
-      addTagAction()
-    }
-  }
+
   Surface(color = MaterialTheme.colors.background) {
     Scaffold(
       topBar = {
         TopAppBar(
-          title = {
-            Text(text = stringResource(R.string.arcticle_list_title))
-          },
-          actions = {
-            IconButton(onClick = event::onNewTagClick) {
-              Icon(
-                imageVector = Icons.Outlined.Label,
-                contentDescription = ""
-              )
-            }
-          }
+          title = { Text(text = stringResource(R.string.arcticle_list_title)) }
         )
       },
       floatingActionButton = {

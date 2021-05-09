@@ -28,36 +28,6 @@ import androidx.compose.ui.unit.dp
 import com.mito.stockarticle.ui.theme.Blue500
 
 @Composable
-fun Chip(
-  modifier: Modifier = Modifier,
-  backgroundColor: Color = MaterialTheme.colors.background,
-  icon: @Composable (() -> Unit)? = null,
-  content: @Composable () -> Unit
-) {
-  Card(
-    modifier = modifier,
-    backgroundColor = backgroundColor,
-    shape = RoundedCornerShape(50)
-  ) {
-    Row(
-      modifier = Modifier.padding(
-        vertical = 4.dp,
-        horizontal = 8.dp
-      ),
-      verticalAlignment = Alignment.CenterVertically
-    ) {
-      if (icon != null) {
-        Box(modifier = Modifier.size(16.dp)) {
-          icon()
-        }
-      }
-      Spacer(Modifier.width(4.dp))
-      content()
-    }
-  }
-}
-
-@Composable
 fun LinkableText(
   modifier: Modifier = Modifier,
   url: String,
@@ -78,18 +48,6 @@ fun LinkableText(
     style = TextStyle(textDecoration = TextDecoration.Underline),
     color = Blue500
   )
-}
-
-@Preview
-@Composable
-fun ChipsPreview() {
-  Chip(backgroundColor = Color.Green,
-    icon = {
-      Icon(imageVector = Icons.Outlined.Add, contentDescription = "add")
-    }
-  ) {
-    Text(text = "hoge")
-  }
 }
 
 @Preview(name = "url text")
