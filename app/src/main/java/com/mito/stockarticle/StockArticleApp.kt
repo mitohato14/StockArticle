@@ -16,20 +16,20 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
 class StockArticleApp : Application() {
-  val dbModule = module {
+  private val dbModule = module {
     single { AppDatabase.getDataBase(get()) }
     single { get<AppDatabase>().articleDao() }
     single { get<AppDatabase>().tagDao() }
   }
 
-  val domainImplModule = module {
+  private val domainImplModule = module {
     single<ArticleRepository> { ArticleRepositoryImpl(get()) }
     single<ArticleReadOnlyRepository> { ArticleRepositoryImpl(get()) }
     single<ArticleTagRepository> { ArticleTagRepositoryImpl(get()) }
     single<ArticleTagReadOnlyRepository> { ArticleTagRepositoryImpl(get()) }
   }
 
-  val viewModelModule = module {
+  private val viewModelModule = module {
     viewModel { ArticleListViewModel(get()) }
     viewModel { ArticleAddViewModel(get()) }
   }
