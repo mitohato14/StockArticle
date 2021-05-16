@@ -194,11 +194,13 @@ private fun ArticleDetail(
 ) {
   Column(modifier = modifier) {
     LinkableText(url = url)
-    Spacer(modifier = Modifier.size(4.dp))
-    Text(
-      text = memo,
-      style = MaterialTheme.typography.caption
-    )
+    if (memo.isNotBlank()) {
+      Spacer(modifier = Modifier.size(4.dp))
+      Text(
+        text = memo,
+        style = MaterialTheme.typography.caption
+      )
+    }
   }
 }
 
