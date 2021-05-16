@@ -147,7 +147,10 @@ private fun ArticleRow(
           text = article.title,
           style = MaterialTheme.typography.h5,
           modifier = Modifier.constrainAs(title) {
-            start.linkTo(parent.start)
+            start.linkTo(
+              parent.start,
+              8.dp
+            )
             top.linkTo(parent.top)
             bottom.linkTo(parent.bottom)
           }
