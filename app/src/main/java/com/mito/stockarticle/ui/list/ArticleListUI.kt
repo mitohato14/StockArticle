@@ -18,13 +18,14 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Archive
-import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,14 +51,30 @@ fun ArticleList(addArticleAction: () -> Unit) {
   val state: ArticleListState = articleListViewModel.state
   val event: ArticleListEvent = articleListViewModel
 
+  val scaffoldState = rememberScaffoldState()
+
   LaunchedEffect(key1 = articleListViewModel.navigateToAdd) {
     articleListViewModel.navigateToAdd.collect {
       addArticleAction()
     }
   }
 
+  LaunchedEffect(key1 = articleListViewModel.archivedArticle) {
+    articleListViewModel.archivedArticle.collect { articleId ->
+      val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+        message = "Archive",
+        actionLabel = "Undo"
+      )
+
+      if (snackbarResult == SnackbarResult.ActionPerformed) {
+        articleListViewModel.onUndoArchiveClick(articleId = articleId)
+      }
+    }
+  }
+
   Surface(color = MaterialTheme.colors.background) {
     Scaffold(
+      scaffoldState = scaffoldState,
       topBar = {
         TopAppBar(
           title = { Text(text = stringResource(R.string.arcticle_list_title)) }
