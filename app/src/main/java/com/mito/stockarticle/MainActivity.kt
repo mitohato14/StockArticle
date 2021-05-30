@@ -20,22 +20,27 @@ class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      StockArticleTheme {
-        // A surface container using the 'background' color from the theme
-        val navController = rememberNavController()
+      StockArticleApp()
+    }
+  }
 
-        val navActions = remember(navController) { MainNavActions(navController) }
+  @Composable
+  private fun StockArticleApp() {
+    StockArticleTheme {
+      // A surface container using the 'background' color from the theme
+      val navController = rememberNavController()
 
-        NavHost(
-          navController = navController,
-          startDestination = MainDestinations.LIST_ROUTE
-        ) {
-          composable(MainDestinations.LIST_ROUTE) {
-            ArticleListScreen(addArticleAction = navActions.addArticle)
-          }
-          composable(MainDestinations.ADD_ARTICLE_ROUTE) {
-            AddArticleScreen(backAction = navActions.popBack)
-          }
+      val navActions = remember(navController) { MainNavActions(navController) }
+
+      NavHost(
+        navController = navController,
+        startDestination = MainDestinations.LIST_ROUTE
+      ) {
+        composable(MainDestinations.LIST_ROUTE) {
+          ArticleListScreen(addArticleAction = navActions.addArticle)
+        }
+        composable(MainDestinations.ADD_ARTICLE_ROUTE) {
+          AddArticleScreen(backAction = navActions.popBack)
         }
       }
     }

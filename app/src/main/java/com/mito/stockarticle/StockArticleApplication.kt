@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
-class StockArticleApp : Application() {
+class StockArticleApplication : Application() {
   private val dbModule = module {
     single { AppDatabase.getDataBase(get()) }
     single { get<AppDatabase>().articleDao() }
@@ -38,7 +38,7 @@ class StockArticleApp : Application() {
     super.onCreate()
 
     startKoin {
-      androidContext(this@StockArticleApp)
+      androidContext(this@StockArticleApplication)
       modules(
         listOf(
           dbModule,
