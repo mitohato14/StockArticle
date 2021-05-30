@@ -42,12 +42,13 @@ import com.mito.stockarticle.domain.Article
 import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.ui.widget.LinkableText
 import kotlinx.coroutines.flow.collect
-import org.koin.androidx.compose.getViewModel
 import java.net.URL
 
 @Composable
-fun ArticleListScreen(addArticleAction: () -> Unit) {
-  val articleListViewModel: ArticleListViewModel = getViewModel()
+fun ArticleListScreen(
+  articleListViewModel: ArticleListViewModel,
+  addArticleAction: () -> Unit
+) {
   val state: ArticleListState = articleListViewModel.state
   val event: ArticleListEvent = articleListViewModel
 

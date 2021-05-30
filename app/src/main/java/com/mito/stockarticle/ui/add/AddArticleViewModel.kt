@@ -1,6 +1,5 @@
 package com.mito.stockarticle.ui.add
 
-import android.net.Uri
 import android.webkit.URLUtil
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,12 +7,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mito.stockarticle.domain.repo.ArticleRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.net.URL
+import javax.inject.Inject
 
-class AddArticleViewModel(
+@HiltViewModel
+class AddArticleViewModel @Inject constructor(
   private val articleRepository: ArticleRepository
 ) : ViewModel(), AddArticleEvent {
   private val _navigateToList = Channel<Unit>(Channel.BUFFERED)

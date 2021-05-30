@@ -8,8 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.net.URL
 import java.util.UUID
+import javax.inject.Inject
 
-class ArticleRepositoryImpl(
+class ArticleRepositoryImpl @Inject constructor(
   private val dao: ArticleDao
 ) : ArticleRepository {
   override suspend fun add(

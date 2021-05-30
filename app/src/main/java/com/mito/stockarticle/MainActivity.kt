@@ -7,15 +7,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.mito.stockarticle.ui.add.AddArticleScreen
+import com.mito.stockarticle.ui.add.AddArticleViewModel
 import com.mito.stockarticle.ui.list.ArticleListScreen
+import com.mito.stockarticle.ui.list.ArticleListViewModel
 import com.mito.stockarticle.ui.theme.StockArticleTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -37,10 +41,18 @@ class MainActivity : ComponentActivity() {
         startDestination = MainDestinations.LIST_ROUTE
       ) {
         composable(MainDestinations.LIST_ROUTE) {
-          ArticleListScreen(addArticleAction = navActions.addArticle)
+          val articleListViewModel: ArticleListViewModel = hiltViewModel()
+          ArticleListScreen(
+            articleListViewModel = articleListViewModel,
+            addArticleAction = navActions.addArticle
+          )
         }
         composable(MainDestinations.ADD_ARTICLE_ROUTE) {
-          AddArticleScreen(backAction = navActions.popBack)
+          val addArticleViewModel: AddArticleViewModel = hiltViewModel()
+          AddArticleScreen(
+            addArticleViewModel = addArticleViewModel,
+            backAction = navActions.popBack
+          )
         }
       }
     }

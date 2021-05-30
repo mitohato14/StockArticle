@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.mito.stockarticle.infra.db.dao.ArticleDao
-import com.mito.stockarticle.infra.db.dao.ArticleTagDao
 import com.mito.stockarticle.infra.db.entity.ArticleEntity
 import com.mito.stockarticle.infra.db.entity.ArticleTagEntity
 
@@ -19,7 +18,6 @@ import com.mito.stockarticle.infra.db.entity.ArticleTagEntity
 )
 abstract class AppDatabase : RoomDatabase() {
   abstract fun articleDao(): ArticleDao
-  abstract fun tagDao(): ArticleTagDao
 
   companion object {
     private var INSTANCE: AppDatabase? = null

@@ -7,12 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.domain.repo.ArticleRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ArticleListViewModel(
+@HiltViewModel
+class ArticleListViewModel @Inject constructor(
   private val articleRepository: ArticleRepository
 ) : ViewModel(), ArticleListEvent {
   var state: ArticleListState by mutableStateOf(ArticleListState())

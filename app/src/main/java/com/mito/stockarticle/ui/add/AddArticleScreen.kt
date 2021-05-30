@@ -27,13 +27,12 @@ import androidx.compose.ui.unit.dp
 import com.mito.stockarticle.R
 import com.mito.stockarticle.ui.widget.BackButton
 import kotlinx.coroutines.flow.collect
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun AddArticleScreen(
+  addArticleViewModel: AddArticleViewModel,
   backAction: () -> Unit
 ) {
-  val addArticleViewModel: AddArticleViewModel = getViewModel()
   val articleState: AddArticleState = addArticleViewModel.articleState
   val articleEvent: AddArticleEvent = addArticleViewModel
 
@@ -163,12 +162,6 @@ fun BackGroundTransparentTextField(
     colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
     modifier = modifier
   )
-}
-
-@Preview
-@Composable
-fun AddArticlePreview() {
-  AddArticleScreen(backAction = {})
 }
 
 @Preview
