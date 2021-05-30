@@ -12,8 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
-import com.mito.stockarticle.ui.add.ArticleAdd
-import com.mito.stockarticle.ui.list.ArticleList
+import com.mito.stockarticle.ui.add.AddArticleScreen
+import com.mito.stockarticle.ui.list.ArticleListScreen
 import com.mito.stockarticle.ui.theme.StockArticleTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,10 +31,10 @@ class MainActivity : ComponentActivity() {
           startDestination = MainDestinations.LIST_ROUTE
         ) {
           composable(MainDestinations.LIST_ROUTE) {
-            ArticleList(addArticleAction = navActions.addArticle)
+            ArticleListScreen(addArticleAction = navActions.addArticle)
           }
           composable(MainDestinations.ADD_ARTICLE_ROUTE) {
-            ArticleAdd(backAction = navActions.popBack)
+            AddArticleScreen(backAction = navActions.popBack)
           }
         }
       }

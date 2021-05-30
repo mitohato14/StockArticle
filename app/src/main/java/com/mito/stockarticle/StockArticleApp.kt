@@ -8,7 +8,7 @@ import com.mito.stockarticle.domain.repo.ArticleTagRepository
 import com.mito.stockarticle.infra.db.AppDatabase
 import com.mito.stockarticle.infra.domain.repo.ArticleRepositoryImpl
 import com.mito.stockarticle.infra.domain.repo.ArticleTagRepositoryImpl
-import com.mito.stockarticle.ui.add.ArticleAddViewModel
+import com.mito.stockarticle.ui.add.AddArticleViewModel
 import com.mito.stockarticle.ui.list.ArticleListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -31,7 +31,7 @@ class StockArticleApp : Application() {
 
   private val viewModelModule = module {
     viewModel { ArticleListViewModel(get()) }
-    viewModel { ArticleAddViewModel(get()) }
+    viewModel { AddArticleViewModel(get()) }
   }
 
   override fun onCreate() {

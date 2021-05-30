@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,17 +37,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.mito.stockarticle.R
 import com.mito.stockarticle.domain.Article
 import com.mito.stockarticle.domain.ArticleId
-import com.mito.stockarticle.ui.utils.LinkableText
+import com.mito.stockarticle.ui.widget.LinkableText
 import kotlinx.coroutines.flow.collect
 import org.koin.androidx.compose.getViewModel
 import java.net.URL
 
 @Composable
-fun ArticleList(addArticleAction: () -> Unit) {
+fun ArticleListScreen(addArticleAction: () -> Unit) {
   val articleListViewModel: ArticleListViewModel = getViewModel()
   val state: ArticleListState = articleListViewModel.state
   val event: ArticleListEvent = articleListViewModel
@@ -76,20 +76,13 @@ fun ArticleList(addArticleAction: () -> Unit) {
     Scaffold(
       scaffoldState = scaffoldState,
       topBar = {
-        TopAppBar(
-          title = { Text(text = stringResource(R.string.arcticle_list_title)) }
-        )
+        TopBar()
       },
       floatingActionButton = {
-        FloatingActionButton(onClick = event::onAddClick) {
-          Icon(
-            imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.add)
-          )
-        }
+        AddFloatingActionButton(event::onAddClick)
       },
       content = {
-        ArticleListContentCompose(
+        ArticleListContent(
           state = state,
           event = event
         )
@@ -99,7 +92,30 @@ fun ArticleList(addArticleAction: () -> Unit) {
 }
 
 @Composable
-private fun ArticleListContentCompose(
+private fun TopBar() {
+  TopAppBar(
+    title = {
+      Text(
+        text = stringResource(R.string.article_list_title)
+      )
+    }
+  )
+}
+
+@Composable
+private fun AddFloatingActionButton(
+  onClick: () -> Unit
+) {
+  FloatingActionButton(onClick = onClick) {
+    Icon(
+      imageVector = Icons.Default.Add,
+      contentDescription = stringResource(R.string.add)
+    )
+  }
+}
+
+@Composable
+private fun ArticleListContent(
   state: ArticleListState,
   event: ArticleListEvent
 ) {
@@ -134,57 +150,59 @@ private fun ArticleRow(
       .fillMaxWidth()
       .animateContentSize()
   ) {
-    Column(
-      modifier = Modifier
-        .fillMaxWidth()
-        .clickable { expand = !expand }
-        .padding(8.dp)
-    ) {
-      ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-        val (title, icon) = createRefs()
+    ArticleRowContent(
+      expand = expand,
+      onCardClick = { expand = !expand },
+      article = article,
+      onArchiveClick = onArchiveClick
+    )
+  }
+}
 
-        Text(
-          text = article.title,
-          style = MaterialTheme.typography.h5,
-          modifier = Modifier.constrainAs(title) {
-            start.linkTo(
-              parent.start,
-              8.dp
-            )
-            top.linkTo(parent.top)
-            bottom.linkTo(parent.bottom)
-          }
+@Composable
+private fun ArticleRowContent(
+  expand: Boolean,
+  onCardClick: () -> Unit,
+  article: Article,
+  onArchiveClick: (ArticleId) -> Unit
+) {
+  Column(
+    modifier = Modifier
+      .fillMaxWidth()
+      .clickable { onCardClick() }
+      .padding(8.dp)
+  ) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+      Text(
+        text = article.title,
+        style = MaterialTheme.typography.h5,
+        modifier = Modifier
+          .padding(start = 8.dp)
+          .weight(1f)
+      )
+
+      IconButton(
+        onClick = { onArchiveClick(article.id) },
+        modifier = Modifier
+          .padding(end = 8.dp)
+      ) {
+        Icon(
+          imageVector = Icons.Outlined.Archive,
+          contentDescription = stringResource(R.string.read),
         )
+      }
+    }
 
-        IconButton(
-          onClick = { onArchiveClick(article.id) },
-          modifier = Modifier.constrainAs(icon) {
-            end.linkTo(
-              parent.end,
-              8.dp
-            )
-            top.linkTo(parent.top)
-            bottom.linkTo(parent.bottom)
-          }
-        ) {
-          Icon(
-            imageVector = Icons.Outlined.Archive,
-            contentDescription = stringResource(R.string.read),
+    if (expand) {
+      ArticleDetail(
+        memo = article.memo,
+        url = article.url.toString(),
+        modifier = Modifier
+          .padding(
+            horizontal = 8.dp,
+            vertical = 16.dp
           )
-        }
-      }
-
-      if (expand) {
-        ArticleDetail(
-          memo = article.memo,
-          url = article.url.toString(),
-          modifier = Modifier
-            .padding(
-              horizontal = 8.dp,
-              vertical = 16.dp
-            )
-        )
-      }
+      )
     }
   }
 }
@@ -222,7 +240,14 @@ private fun ArticleListPreview() {
       )
     )
   }
-//  ArticleList(articleList = articleList.toList())
+  ArticleListContent(
+    state = ArticleListState(articleList = articleList),
+    event = object : ArticleListEvent {
+      override fun onAddClick() {}
+      override fun onArchiveClick(articleId: ArticleId) {}
+      override fun onUndoArchiveClick(articleId: ArticleId) {}
+    }
+  )
 }
 
 @Preview(showBackground = true)
@@ -235,9 +260,8 @@ private fun ArticleRowPreview() {
       url = URL("http://google.com"),
       memo = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       isArchived = false
-    ),
-    {}
-  )
+    )
+  ) {}
 }
 
 @Preview
