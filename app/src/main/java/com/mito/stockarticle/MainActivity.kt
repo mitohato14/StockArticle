@@ -43,15 +43,21 @@ class MainActivity : ComponentActivity() {
         composable(MainDestinations.LIST_ROUTE) {
           val articleListViewModel: ArticleListViewModel = hiltViewModel()
           ArticleListScreen(
-            articleListViewModel = articleListViewModel,
-            addArticleAction = navActions.addArticle
+
+            articleListState = articleListViewModel.state,
+            articleListEvent = articleListViewModel,
+            navigateToAdd = articleListViewModel.navigateToAdd,
+            archivedArticle = articleListViewModel.archivedArticle,
+            addArticleAction = navActions.addArticle,
           )
         }
         composable(MainDestinations.ADD_ARTICLE_ROUTE) {
           val addArticleViewModel: AddArticleViewModel = hiltViewModel()
           AddArticleScreen(
-            addArticleViewModel = addArticleViewModel,
-            backAction = navActions.popBack
+            addArticleState = addArticleViewModel.articleState,
+            addArticleEvent = addArticleViewModel,
+            navigateToList = addArticleViewModel.navigateToList,
+            backAction = navActions.popBack,
           )
         }
       }

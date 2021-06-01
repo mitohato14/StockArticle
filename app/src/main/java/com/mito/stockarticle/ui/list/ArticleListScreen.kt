@@ -41,34 +41,36 @@ import com.mito.stockarticle.R
 import com.mito.stockarticle.domain.Article
 import com.mito.stockarticle.domain.ArticleId
 import com.mito.stockarticle.ui.widget.LinkableText
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import java.net.URL
 
 @Composable
 fun ArticleListScreen(
-  articleListViewModel: ArticleListViewModel,
+  articleListState: ArticleListState,
+  articleListEvent: ArticleListEvent,
+  navigateToAdd: Flow<Unit>,
+  archivedArticle: Flow<ArticleId>,
   addArticleAction: () -> Unit
 ) {
-  val state: ArticleListState = articleListViewModel.state
-  val event: ArticleListEvent = articleListViewModel
 
   val scaffoldState = rememberScaffoldState()
 
-  LaunchedEffect(key1 = articleListViewModel.navigateToAdd) {
-    articleListViewModel.navigateToAdd.collect {
+  LaunchedEffect(key1 = navigateToAdd) {
+    navigateToAdd.collect {
       addArticleAction()
     }
   }
 
-  LaunchedEffect(key1 = articleListViewModel.archivedArticle) {
-    articleListViewModel.archivedArticle.collect { articleId ->
+  LaunchedEffect(key1 = archivedArticle) {
+    archivedArticle.collect { articleId ->
       val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
         message = "Archive",
         actionLabel = "Undo"
       )
 
       if (snackbarResult == SnackbarResult.ActionPerformed) {
-        articleListViewModel.onUndoArchiveClick(articleId = articleId)
+        articleListEvent.onUndoArchiveClick(articleId = articleId)
       }
     }
   }
@@ -80,12 +82,12 @@ fun ArticleListScreen(
         TopBar()
       },
       floatingActionButton = {
-        AddFloatingActionButton(event::onAddClick)
+        AddFloatingActionButton(articleListEvent::onAddClick)
       },
       content = {
         ArticleListContent(
-          state = state,
-          event = event
+          state = articleListState,
+          event = articleListEvent
         )
       }
     )
