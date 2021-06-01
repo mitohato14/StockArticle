@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">StockArticle</string>
+    <string name="add">Add</string>
+    <string name="read">Read</string>
+    <string name="article_list_title">記事一覧</string>
+    <string name="article_add_title">記事追加</string>
+    <string name="article_add__action_description">追加ボタン</string>
+    <string name="back">back</string>
+    <string name="tag_add_title">タグ管理</string>
 </resources>
