@@ -26,18 +26,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mito.stockarticle.R
 import com.mito.stockarticle.ui.widget.BackButton
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 
 @Composable
 fun AddArticleScreen(
-  addArticleViewModel: AddArticleViewModel,
+  addArticleEvent: AddArticleEvent,
+  addArticleState: AddArticleState,
+  navigateToList: Flow<Unit>,
   backAction: () -> Unit
 ) {
-  val articleState: AddArticleState = addArticleViewModel.articleState
-  val articleEvent: AddArticleEvent = addArticleViewModel
 
-  LaunchedEffect(key1 = addArticleViewModel.navigateToList) {
-    addArticleViewModel.navigateToList.collect {
+  LaunchedEffect(key1 = navigateToList) {
+    navigateToList.collect {
       backAction()
     }
   }
@@ -45,15 +46,15 @@ fun AddArticleScreen(
   Scaffold(
     topBar = {
       TopBar(
-        articleEvent::onBackClick,
-        articleState.addable,
-        articleEvent::onAddClick
+        addArticleEvent::onBackClick,
+        addArticleState.addable,
+        addArticleEvent::onAddClick
       )
     },
     content = {
       AddArticleContent(
-        articleState = articleState,
-        articleEvent = articleEvent
+        articleState = addArticleState,
+        articleEvent = addArticleEvent
       )
     }
   )
